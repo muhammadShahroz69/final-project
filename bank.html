@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank App</title>
+    <style>
+        body{
+            font-family: 'Open sans',Sans-Serif;
+            background-color: black;
+        }
+
+        #container{
+            width: 1000px;
+            height: 550px;
+            margin: 20px auto;
+            background-size: cover;
+        }
+
+        #calculator{
+            width: 320px;
+            height: 520px;
+            background-color: #eaedef;
+            margin: 0 auto;
+            top:20px;
+            position: relative;
+            border-radius: 5px;
+        }
+
+        #result{
+            height: 150px;
+            padding: 20px;
+        }
+
+        #keyboard{
+            height: 360px;
+        }
+
+        #output-value{
+            font-size: 28px;
+            font-weight: bold;
+            color: black;
+            text-align: right;
+        }
+
+        #history-value{
+            color: grey;
+            font-size: 16px;
+            text-align: right;
+        }
+
+        .btn{
+            width: 60px;
+            height: 60px;
+            margin: 10px;
+            float: left;
+            border-radius: 50%;
+            border: none;
+            background-color: #f0f0f0;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn:hover{
+            background-color: #d6d6d6;
+        }
+
+        .income{
+            background-color: rgb(0, 155, 0);
+            color: white;
+        }
+        .expense{
+            background-color: rgb(200, 0, 0);
+            color: white;
+        }
+        .clear{
+            background-color: rgb(255, 42, 42);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+        <div id="calculator">
+
+            <!-- DISPLAY -->
+            <div id="result">
+                <p id="history-value">Balance: ₹0</p>
+                <p id="output-value">0</p>
+            </div>
+
+            <!-- BUTTONS -->
+            <div id="keyboard">
+
+                <button class="btn income" onclick="setType('income')">IN+</button>
+                <button class="btn expense" onclick="setType('expense')">EX-</button>
+                <button class="btn clear" onclick="resetAll()">CLR</button>
+                <button class="btn" onclick="addDigit('%')">%</button>
+
+                <button class="btn" onclick="addDigit('7')">7</button>
+                <button class="btn" onclick="addDigit('8')">8</button>
+                <button class="btn" onclick="addDigit('9')">9</button>
+                <button class="btn" onclick="addDigit('/')">/</button>
+
+                <button class="btn" onclick="addDigit('4')">4</button>
+                <button class="btn" onclick="addDigit('5')">5</button>
+                <button class="btn" onclick="addDigit('6')">6</button>
+                <button class="btn" onclick="addDigit('*')">*</button>
+
+                <button class="btn" onclick="addDigit('1')">1</button>
+                <button class="btn" onclick="addDigit('2')">2</button>
+                <button class="btn" onclick="addDigit('3')">3</button>
+                <button class="btn" onclick="addDigit('-')">-</button>
+
+                <button class="btn">( )</button>
+                <button class="btn" onclick="addDigit('0')">0</button>
+                <button class="btn">.</button>
+                <button class="btn" onclick="calculate()">=</button>
+
+            </div>
+
+        </div>
+    </div>
+
+<script>
+    let balance = 0;
+    let type = ""; 
+    let screen = "";
+
+    function setType(t){
+        type = t;
+        screen = "";
+        document.getElementById("output-value").innerText = "0";
+    }
+
+    function addDigit(d){
+        screen += d;
+        document.getElementById("output-value").innerText = screen;
+    }
+
+    function calculate(){
+        if(screen === "") return;
+
+        let amount = eval(screen);
+
+        if(type === "income"){
+            balance += amount;
+        }
+        else if(type === "expense"){
+            balance -= amount;
+        }
+
+        document.getElementById("history-value").innerText = "Balance: ₹" + balance;
+        document.getElementById("output-value").innerText = amount;
+
+        screen = "";
+        type = "";
+    }
+
+    function resetAll(){
+        balance = 0;
+        screen = "";
+        type = "";
+        document.getElementById("history-value").innerText = "Balance: ₹0";
+        document.getElementById("output-value").innerText = "0";
+    }
+</script>
+
+</body>
+</html>
