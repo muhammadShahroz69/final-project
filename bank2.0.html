@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank App</title>
+</head>
+
+<style>
+    body{
+        font-family: 'Open sans',Sans-Serif;
+        background-color: black;
+    }
+
+    #container{
+        width: 1000px;
+        height: 550px;
+        background-color: #111;
+        margin: 20px auto;
+        border-radius: 10px;
+        padding-top: 30px;
+    }
+
+    #calculator{
+        width: 320px;
+        height: auto;
+        background-color: #eaedef;
+        margin: 0 auto;
+        padding-bottom: 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.20);
+    }
+
+    #balance-box{
+        text-align: center;
+        padding: 20px;
+    }
+
+    #balance{
+        font-size: 35px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .btn{
+        width: 120px;
+        height: 50px;
+        margin: 10px;
+        border-radius: 10px;
+        border: none;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    #income-btn{
+        background-color: #28a745;
+    }
+
+    #expense-btn{
+        background-color: #dc3545;
+    }
+
+    #history-box{
+        margin-top: 20px;
+        text-align: left;
+        padding: 10px 20px;
+        height: 200px;
+        overflow-y: auto;
+        font-size: 16px;
+    }
+
+    .history-item{
+        padding: 5px 0;
+        border-bottom: 1px solid #aaa;
+    }
+</style>
+
+<body>
+
+<div id="container">
+    <div id="calculator">
+
+        <div id="balance-box">
+            <h2>Balance</h2>
+            <p id="balance">0</p>
+        </div>
+
+        <div style="text-align:center;">
+            <button class="btn" id="income-btn">Income</button>
+            <button class="btn" id="expense-btn">Expense</button>
+        </div>
+
+        <div id="history-box">
+            <h3>History</h3>
+            <div id="history-list"></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+var balance = 0;
+
+function updateBalance(){
+    document.getElementById("balance").innerHTML = balance;
+}
+
+function addHistory(type, amount){
+    var list = document.getElementById("history-list");
+    var entry = document.createElement("div");
+    entry.classList.add("history-item");
+
+    if(type === "income"){
+        entry.style.color = "#28a745";
+        entry.innerHTML = "+ " + amount;
+    } else {
+        entry.style.color = "#dc3545";
+        entry.innerHTML = "- " + amount;
+    }
+
+    list.appendChild(entry);
+}
+
+document.getElementById("income-btn").addEventListener("click", function(){
+    var amount = prompt("Enter income amount:");
+    
+    if(amount && !isNaN(amount)){
+        amount = Number(amount);
+        balance += amount;
+        updateBalance();
+        addHistory("income", amount);
+    }
+});
+
+document.getElementById("expense-btn").addEventListener("click", function(){
+    var amount = prompt("Enter expense amount:");
+    
+    if(amount && !isNaN(amount)){
+        amount = Number(amount);
+        balance -= amount;
+        updateBalance();
+        addHistory("expense", amount);
+    }
+});
+
+</script>
+
+</body>
+</html>
